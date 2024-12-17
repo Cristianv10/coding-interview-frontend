@@ -12,6 +12,8 @@ class CurrencyDataSource {
 
     final response = await http.get(uri);
 
+    print('Response: ${response.body}');
+
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

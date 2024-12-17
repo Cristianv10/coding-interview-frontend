@@ -1,5 +1,4 @@
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
-import 'package:coding_interview_frontend/domain/currency_convertion/use_cases/calculate_conversion.dart';
 import 'package:coding_interview_frontend/domain/currency_convertion/use_cases/get_conversion_rate.dart';
 import 'package:coding_interview_frontend/infrastructure/core/injector.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +27,10 @@ class AppBlocProvider extends StatelessWidget {
   CurrencyConversionBloc _createCurrencyConvertionBloc() {
     // Use the Injector to resolve the dependencies
     final getConversionRate = Injector.resolve<GetConversionRate>();
-    final calculateConversion = Injector.resolve<CalculateConversion>();
 
     // Create the cubit with resolved dependencies
-    return CurrencyConversionBloc(getConversionRate, calculateConversion);
+    return CurrencyConversionBloc(
+      getConversionRate,
+    );
   }
 }

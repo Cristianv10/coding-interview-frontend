@@ -12,20 +12,19 @@ class CurrencyConversionLoading extends CurrencyConversionState {}
 
 class CurrencyConversionLoaded extends CurrencyConversionState {
   final double rate;
+  final String receivedAmountText;
+  final ConversionRequest request;
 
-  CurrencyConversionLoaded({required this.rate});
+  CurrencyConversionLoaded(
+      {required this.rate,
+      required this.receivedAmountText,
+      required this.request});
 }
 
 class CurrencyConversionUpdated extends CurrencyConversionState {
   final ConversionRequest request;
 
   CurrencyConversionUpdated({required this.request});
-}
-
-class CurrencyConversionResult extends CurrencyConversionState {
-  final double result;
-
-  CurrencyConversionResult({required this.result});
 }
 
 class CurrencyConversionError extends CurrencyConversionState {

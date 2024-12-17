@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SubmitButton extends StatelessWidget {
-  const SubmitButton({super.key});
+  const SubmitButton({super.key, required bool isEnabled});
 
   @override
   Widget build(BuildContext context) {

@@ -1,71 +1,81 @@
+import 'package:coding_interview_frontend/application/currency_convertion/cucurrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/converstion_detail_item.dart';
+import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_change_card.dart';
+import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_convertion_wrapper.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_input_field.dart';
-import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_selector.dart';
-import 'package:coding_interview_frontend/presentation/currency_convertion/view/fiat_currency_selection.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/submit_button.dart';
 import 'package:flutter/material.dart';
-import 'package:coding_interview_frontend/presentation/core/assets/assets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CurrencyConversionView extends StatelessWidget {
+class CurrencyConversionView extends StatefulWidget {
   const CurrencyConversionView({super.key});
 
   @override
+  State<CurrencyConversionView> createState() => _CurrencyConversionViewState();
+}
+
+class _CurrencyConversionViewState extends State<CurrencyConversionView> {
+  @override
+  void initState() {
+    _setInitConversion();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            spreadRadius: 1,
-          )
-        ],
-      ),
-      child: Column(
+    return CurrencyConvertionWrapper(
+      children: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CurrencySelector(
-            title: 'Tengo',
-            currency: 'USDT',
-            assetPath: Assets.tatum,
-            isFiat: false,
-            onTap: () {},
-          ),
-          const SizedBox(height: 10),
-          CurrencySelector(
-            title: 'Quiero',
-            currency: 'VES',
-            assetPath: Assets.vesCurrency,
-            isFiat: true,
-            onTap: () => _showCurrencySelection(context),
-          ),
+          const CurrencyChangeCard(),
           const SizedBox(height: 20),
           const CurrencyInputField(),
-          const SizedBox(height: 20),
-          const ConversionDetailItem(
-              label: 'Tasa estimada', value: '25.00 VES'),
-          const ConversionDetailItem(label: 'Recibirás', value: '125.00 VES'),
-          const ConversionDetailItem(label: 'Tiempo estimado', value: '10 Min'),
-          const SizedBox(height: 20),
-          const SubmitButton(),
+          BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
+            builder: (context, state) {
+              if (state is CurrencyConversionLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state is CurrencyConversionLoaded) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    ConversionDetailItem(
+                      label: 'Tasa estimada',
+                      value: '${state.rate.toStringAsFixed(2)} VES',
+                    ),
+                    ConversionDetailItem(
+                      label: 'Recibirás',
+                      value: state.receivedAmountText,
+                    ),
+                    const ConversionDetailItem(
+                      label: 'Tiempo estimado',
+                      value: '10 Min',
+                    ),
+                    const SizedBox(height: 20),
+                    const SubmitButton(isEnabled: true),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );
   }
 
-  void _showCurrencySelection(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => const FiatCurrencySelectionView(),
-    );
+  void _setInitConversion() {
+    context.read<CurrencyConversionBloc>().add(
+          UpdateConversionRequest(
+            cryptoCurrencyId: 'TATUM-TRON-USDT',
+            fiatCurrencyId: 'VES',
+            type: 0,
+            amountCurrencyId: 'TATUM-TRON-USDT',
+          ),
+        );
   }
 }

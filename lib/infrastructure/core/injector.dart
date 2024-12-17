@@ -1,5 +1,4 @@
 import 'package:coding_interview_frontend/domain/currency_convertion/repositories/currency_repository.dart';
-import 'package:coding_interview_frontend/domain/currency_convertion/use_cases/calculate_conversion.dart';
 import 'package:coding_interview_frontend/domain/currency_convertion/use_cases/get_conversion_rate.dart';
 import 'package:coding_interview_frontend/infrastructure/currency_convertion/data_sources/currency_data_source.dart';
 import 'package:coding_interview_frontend/infrastructure/currency_convertion/repository/currency_repository_implementation.dart';
@@ -34,6 +33,5 @@ abstract class Injector {
   // Register the use cases
 // Aquí registramos los casos de uso
   @Register.factory(GetConversionRate)
-  @Register.factory(CalculateConversion)
   void _configureCurrencyConvertionUseCases();
 }

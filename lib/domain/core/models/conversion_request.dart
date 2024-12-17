@@ -37,7 +37,7 @@ class ConversionRequest {
     );
   }
 
-  Map<String, String> toQueryParameters() {
+  Map<String, dynamic> toQueryParameters() {
     return {
       'cryptoCurrencyId': cryptoCurrencyId,
       'fiatCurrencyId': fiatCurrencyId,
@@ -54,8 +54,8 @@ class ConversionRequest {
           'Invalid type: must be 0 (Crypto -> Fiat) or 1 (Fiat -> Crypto)');
     }
 
-    if (amount <= 0) {
-      throw Exception('Amount must be greater than zero');
+    if (amount <= 1) {
+      throw Exception('Amount must be greater than one');
     }
 
     if (cryptoCurrencyId.isEmpty ||

@@ -19,9 +19,7 @@ class _$Injector extends Injector {
   @override
   void _configureCurrencyConvertionUseCases() {
     final KiwiContainer container = KiwiContainer();
-    container
-      ..registerFactory(
-          (c) => GetConversionRate(c.resolve<CurrencyRepository>()))
-      ..registerFactory((c) => CalculateConversion());
+    container.registerFactory(
+        (c) => GetConversionRate(c.resolve<CurrencyRepository>()));
   }
 }
