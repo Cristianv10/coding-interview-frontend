@@ -1,6 +1,7 @@
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
+import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/conversation_detail_item.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_change_card.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_convertion_wrapper.dart';
@@ -65,6 +66,15 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
                     const SizedBox(height: 20),
                     const SubmitButton(isEnabled: true),
                   ],
+                );
+              }
+              if (state is CurrencyConversionError) {
+                return const Center(
+                  child: TextBase(
+                    text: 'Existe un error con la API',
+                    color: Colors.orange,
+                    fontWeight: FontWeight.w800,
+                  ),
                 );
               }
               return const SizedBox.shrink();
