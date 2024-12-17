@@ -20,8 +20,7 @@ class GetConversionRate {
 
     // Handle the Either result.
     return result.fold(
-      (failure) =>
-          throw Exception(failure), // Handle failure by throwing an exception.
+      (failure) => Left(failure), // Handle failure by throwing an exception.
       (rate) => Right(rate), // Return the conversion rate on success.
     );
   }
