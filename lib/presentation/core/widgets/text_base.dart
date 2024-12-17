@@ -39,7 +39,7 @@ class TextBase extends StatelessWidget {
             fontWeight: fontWeight,
             fontSize: fontSize,
             decoration: decoration,
-            color: color ?? Colors.white70,
+            color: color ?? Colors.black,
             fontFamily: fontFamily,
           ) ??
           GoogleFonts.montserrat(
@@ -47,7 +47,7 @@ class TextBase extends StatelessWidget {
             fontWeight: fontWeight,
             fontSize: fontSize,
             decoration: decoration,
-            color: color ?? Colors.white70,
+            color: color ?? Colors.black,
           ),
     );
   }

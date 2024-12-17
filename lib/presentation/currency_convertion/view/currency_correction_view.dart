@@ -1,4 +1,4 @@
-import 'package:coding_interview_frontend/application/currency_convertion/cucurrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/converstion_detail_item.dart';
@@ -36,7 +36,13 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
           BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
             builder: (context, state) {
               if (state is CurrencyConversionLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  )),
+                );
               }
               if (state is CurrencyConversionLoaded) {
                 return Column(
@@ -45,7 +51,8 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
                     const SizedBox(height: 20),
                     ConversionDetailItem(
                       label: 'Tasa estimada',
-                      value: '${state.rate.toStringAsFixed(2)} VES',
+                      value:
+                          '${state.rate.toStringAsFixed(2)} ${state.request.amountCurrencyId}',
                     ),
                     ConversionDetailItem(
                       label: 'Recibirás',
@@ -75,6 +82,7 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
             fiatCurrencyId: 'VES',
             type: 0,
             amountCurrencyId: 'TATUM-TRON-USDT',
+            isSwapped: false,
           ),
         );
   }

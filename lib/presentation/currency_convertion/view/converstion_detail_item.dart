@@ -1,3 +1,4 @@
+import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
 import 'package:flutter/material.dart';
 
 class ConversionDetailItem extends StatelessWidget {
@@ -14,8 +15,8 @@ class ConversionDetailItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 14)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+          TextBase(text: label, fontSize: 14),
+          TextBase(text: value, fontWeight: FontWeight.bold),
         ],
       ),
     );

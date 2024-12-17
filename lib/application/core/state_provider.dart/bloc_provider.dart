@@ -25,10 +25,7 @@ class AppBlocProvider extends StatelessWidget {
 
   /// Creates and resolves the `CurrencyConversionCubit` using the Injector.
   CurrencyConversionBloc _createCurrencyConvertionBloc() {
-    // Use the Injector to resolve the dependencies
     final getConversionRate = Injector.resolve<GetConversionRate>();
-
-    // Create the cubit with resolved dependencies
     return CurrencyConversionBloc(
       getConversionRate,
     );

@@ -1,4 +1,8 @@
+import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
 import 'package:coding_interview_frontend/presentation/core/assets/assets.dart';
 
 class FiatCurrencySelectionView extends StatefulWidget {
@@ -39,18 +43,25 @@ class _FiatCurrencySelectionViewState extends State<FiatCurrencySelectionView> {
       String currencyCode, String currencyName, String assetPath) {
     return ListTile(
       leading: Image.asset(assetPath, width: 40, height: 40),
-      title: Text(currencyCode,
-          style: const TextStyle(fontWeight: FontWeight.bold)),
+      title: TextBase(
+        text: currencyCode,
+        fontWeight: FontWeight.bold,
+      ),
       subtitle: Text(currencyName),
       trailing: Icon(
         _selectedCurrency == currencyCode
             ? Icons.radio_button_checked
             : Icons.radio_button_off,
+        color: Colors.orange,
       ),
       onTap: () {
         setState(() {
           _selectedCurrency = currencyCode;
         });
+        context.read<CurrencyConversionBloc>().add(
+              UpdateConversionRequest(fiatCurrencyId: currencyCode),
+            );
+        Navigator.of(context).pop();
       },
     );
   }

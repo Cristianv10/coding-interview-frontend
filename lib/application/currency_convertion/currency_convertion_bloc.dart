@@ -1,4 +1,4 @@
-import 'package:coding_interview_frontend/application/currency_convertion/cucurrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:coding_interview_frontend/domain/currency_convertion/use_cases/get_conversion_rate.dart';
@@ -13,19 +13,21 @@ class CurrencyConversionBloc
     on<UpdateConversionRequest>(_onUpdateConversionRequest);
   }
 
-  /// Event handler for [UpdateConversionRequest]
+  /// Handles the update request event
   Future<void> _onUpdateConversionRequest(UpdateConversionRequest event,
       Emitter<CurrencyConversionState> emit) async {
     final updatedRequest = _buildUpdatedRequest(event);
+    final bool isSwapped = updatedRequest.type == 1;
 
-    emit(CurrencyConversionUpdated(request: updatedRequest));
+    emit(CurrencyConversionUpdated(
+        request: updatedRequest, isSwapped: isSwapped));
 
-    if (_validateRequest(updatedRequest, emit)) {
+    if (_isValidRequest(updatedRequest)) {
       await _fetchConversionRate(updatedRequest, emit);
     }
   }
 
-  /// Builds an updated request based on the current request and the event.
+  /// Builds the updated request
   ConversionRequest _buildUpdatedRequest(UpdateConversionRequest event) {
     final currentRequest = _getCurrentRequest();
     return currentRequest.copyWith(
@@ -37,7 +39,7 @@ class CurrencyConversionBloc
     );
   }
 
-  /// Returns the current request based on the current state.
+  /// Gets the current request from the state
   ConversionRequest _getCurrentRequest() {
     if (state is CurrencyConversionUpdated) {
       return (state as CurrencyConversionUpdated).request;
@@ -49,29 +51,35 @@ class CurrencyConversionBloc
     return ConversionRequest.empty();
   }
 
-  /// Validates the request and returns true if the request is valid.
-  bool _validateRequest(ConversionRequest request, Emitter emit) {
+  /// Validates the request
+  bool _isValidRequest(ConversionRequest request) {
     try {
       request.validate();
       return true;
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   }
 
-  /// Fetches the conversion rate based on the provided [ConversionRequest].
+  /// Fetches conversion rate from the use case
   Future<void> _fetchConversionRate(
       ConversionRequest request, Emitter emit) async {
-    emit(CurrencyConversionLoading());
+    emit(CurrencyConversionLoading(
+        isSwapped: request.type == 1, request: request));
     final result = await _getConversionRate(request);
+
     result.fold(
       (failure) => emit(CurrencyConversionError(failure)),
       (rate) {
-        final receivedAmount = (rate * request.amount).toStringAsFixed(2);
+        final receivedAmount = (request.type == 1)
+            ? (request.amount / rate).toStringAsFixed(2) // FIAT a CRYPTO
+            : (request.amount * rate).toStringAsFixed(2); // CRYPTO a FIAT
+
         emit(CurrencyConversionLoaded(
           rate: rate,
           receivedAmountText: '$receivedAmount ${request.fiatCurrencyId}',
           request: request,
+          isSwapped: request.type == 1 ? true : false,
         ));
       },
     );

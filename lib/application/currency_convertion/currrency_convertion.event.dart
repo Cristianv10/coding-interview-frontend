@@ -14,6 +14,7 @@ class UpdateConversionRequest extends CurrencyConversionEvent {
   final int? type;
   final double? amount;
   final String? amountCurrencyId;
+  final bool? isSwapped;
 
   UpdateConversionRequest({
     this.cryptoCurrencyId,
@@ -21,17 +22,8 @@ class UpdateConversionRequest extends CurrencyConversionEvent {
     this.type,
     this.amount,
     this.amountCurrencyId,
+    this.isSwapped,
   });
 }
 
-class CalculateConversionResult extends CurrencyConversionEvent {
-  final double rate;
-  final double amount;
-  final bool isCryptoToFiat;
-
-  CalculateConversionResult({
-    required this.rate,
-    required this.amount,
-    required this.isCryptoToFiat,
-  });
-}
+class SwapCurrencies extends CurrencyConversionEvent {}
