@@ -77,7 +77,8 @@ class CurrencyConversionBloc
 
         emit(CurrencyConversionLoaded(
           rate: rate,
-          receivedAmountText: '$receivedAmount ${request.fiatCurrencyId}',
+          receivedAmountText:
+              '$receivedAmount ${request.type == 1 ? request.cryptoCurrencyId : request.fiatCurrencyId}',
           request: request,
           isSwapped: request.type == 1 ? true : false,
         ));

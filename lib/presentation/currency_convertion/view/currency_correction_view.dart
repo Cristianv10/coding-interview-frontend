@@ -52,7 +52,7 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
                     ConversionDetailItem(
                       label: 'Tasa estimada',
                       value:
-                          '${state.rate.toStringAsFixed(2)} ${state.request.amountCurrencyId}',
+                          '${state.rate.toStringAsFixed(2)} ${state.isSwapped ? state.request.fiatCurrencyId : state.request.amountCurrencyId}',
                     ),
                     ConversionDetailItem(
                       label: 'Recibirás',
