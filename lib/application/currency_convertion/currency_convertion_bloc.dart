@@ -64,25 +64,40 @@ class CurrencyConversionBloc
   /// Fetches conversion rate from the use case
   Future<void> _fetchConversionRate(
       ConversionRequest request, Emitter emit) async {
-    emit(CurrencyConversionLoading(
-        isSwapped: request.type == 1, request: request));
+    final isSwapped = request.type == 1;
+
+    emit(CurrencyConversionLoading(isSwapped: isSwapped, request: request));
     final result = await _getConversionRate(request);
 
     result.fold(
       (failure) => emit(CurrencyConversionError(failure)),
       (rate) {
-        final receivedAmount = (request.type == 1)
-            ? (request.amount / rate).toStringAsFixed(2) // FIAT a CRYPTO
-            : (request.amount * rate).toStringAsFixed(2); // CRYPTO a FIAT
+        final receivedAmount = _calculateReceivedAmount(request, rate);
+        final currencyId = _getCurrencyId(request);
 
         emit(CurrencyConversionLoaded(
           rate: rate,
-          receivedAmountText:
-              '$receivedAmount ${request.type == 1 ? request.cryptoCurrencyId : request.fiatCurrencyId}',
+          receivedAmountText: '$receivedAmount $currencyId',
           request: request,
-          isSwapped: request.type == 1 ? true : false,
+          isSwapped: isSwapped,
         ));
       },
     );
+  }
+
+  /// Calculates the received amount based on request type (FIAT to CRYPTO or CRYPTO to FIAT)
+  String _calculateReceivedAmount(ConversionRequest request, double rate) {
+    if (request.type == 1) {
+      return (request.amount / rate).toStringAsFixed(2); // FIAT to CRYPTO
+    } else {
+      return (request.amount * rate).toStringAsFixed(2); // CRYPTO to FIAT
+    }
+  }
+
+  /// Gets the appropriate currency ID based on request type
+  String _getCurrencyId(ConversionRequest request) {
+    return request.type == 1
+        ? request.cryptoCurrencyId
+        : request.fiatCurrencyId;
   }
 }
