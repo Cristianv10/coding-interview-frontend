@@ -2,7 +2,7 @@ import 'package:coding_interview_frontend/presentation/core/widgets/text_base.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
-import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/presentation/core/assets/assets.dart';
 
 class FiatCurrencySelectionView extends StatefulWidget {

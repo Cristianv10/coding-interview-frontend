@@ -2,12 +2,14 @@ import 'package:coding_interview_frontend/domain/core/models/conversion_request.
 
 abstract class CurrencyConversionEvent {}
 
+/// The event to fetch the conversion rate
 class FetchConversionRate extends CurrencyConversionEvent {
   final ConversionRequest request;
 
   FetchConversionRate(this.request);
 }
 
+/// The event to update the conversion request
 class UpdateConversionRequest extends CurrencyConversionEvent {
   final String? cryptoCurrencyId;
   final String? fiatCurrencyId;
@@ -25,5 +27,3 @@ class UpdateConversionRequest extends CurrencyConversionEvent {
     this.isSwapped,
   });
 }
-
-class SwapCurrencies extends CurrencyConversionEvent {}

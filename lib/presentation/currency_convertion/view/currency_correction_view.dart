@@ -1,7 +1,7 @@
-import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
-import 'package:coding_interview_frontend/presentation/currency_convertion/view/converstion_detail_item.dart';
+import 'package:coding_interview_frontend/presentation/currency_convertion/view/conversation_detail_item.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_change_card.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_convertion_wrapper.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_input_field.dart';
@@ -52,7 +52,7 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
                     ConversionDetailItem(
                       label: 'Tasa estimada',
                       value:
-                          '${state.rate.toStringAsFixed(2)} ${state.isSwapped ? state.request.fiatCurrencyId : state.request.amountCurrencyId}',
+                          '${state.rate.toStringAsFixed(2)} ${state.currentCurrency}',
                     ),
                     ConversionDetailItem(
                       label: 'Recibirás',

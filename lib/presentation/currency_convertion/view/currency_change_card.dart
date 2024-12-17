@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
-import 'package:coding_interview_frontend/application/currency_convertion/currrency_convertion.event.dart';
+import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_selector.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/fiat_currency_selection.dart';
 
