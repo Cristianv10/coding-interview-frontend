@@ -30,8 +30,7 @@ class CurrencyConversionLoaded extends CurrencyConversionState {
       required this.request,
       this.isSwapped = false});
 
-  String get currentCurrency =>
-      isSwapped ? request.fiatCurrencyId : request.amountCurrencyId;
+  String get currentCurrency => isSwapped ? request.fiatCurrencyId : 'USDT';
 }
 
 /// The updated state of the currency conversion

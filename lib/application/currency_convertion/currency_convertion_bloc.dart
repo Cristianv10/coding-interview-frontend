@@ -96,8 +96,6 @@ class CurrencyConversionBloc
 
   /// Gets the appropriate currency ID based on request type
   String _getCurrencyId(ConversionRequest request) {
-    return request.type == 1
-        ? request.cryptoCurrencyId
-        : request.fiatCurrencyId;
+    return request.type == 1 ? 'USDT' : request.fiatCurrencyId;
   }
 }
