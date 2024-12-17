@@ -8,6 +8,22 @@ class FetchConversionRate extends CurrencyConversionEvent {
   FetchConversionRate(this.request);
 }
 
+class UpdateConversionRequest extends CurrencyConversionEvent {
+  final String? cryptoCurrencyId;
+  final String? fiatCurrencyId;
+  final int? type;
+  final double? amount;
+  final String? amountCurrencyId;
+
+  UpdateConversionRequest({
+    this.cryptoCurrencyId,
+    this.fiatCurrencyId,
+    this.type,
+    this.amount,
+    this.amountCurrencyId,
+  });
+}
+
 class CalculateConversionResult extends CurrencyConversionEvent {
   final double rate;
   final double amount;

@@ -1,6 +1,7 @@
+import 'package:coding_interview_frontend/presentation/currency_convertion/page/background_design.dart';
+import 'package:flutter/material.dart';
 import 'package:coding_interview_frontend/presentation/core/widgets/layout.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_correction_view.dart';
-import 'package:flutter/material.dart';
 
 class CurrencyConvertionPage extends StatelessWidget {
   const CurrencyConvertionPage({super.key});
@@ -10,20 +11,24 @@ class CurrencyConvertionPage extends StatelessWidget {
     // Get the size of the screen to make the layout responsive
     Size size = MediaQuery.of(context).size;
     return AppLayout(
-      children: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-        child: SizedBox(
-          width: size.width * 0.9,
-          height: size.height,
-          child: const Column(
-            children: [
-              SizedBox(height: 20),
-              CryptoCurrencySelectionView(),
-              FiatCurrencySelectionView(),
-              CurrencyConversionView(),
-            ],
+      children: Stack(
+        children: [
+          BackgroundDesign(size: size),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: SizedBox(
+              width: size.width * 0.9,
+              height: size.height,
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 20),
+                  CurrencyConversionView(),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

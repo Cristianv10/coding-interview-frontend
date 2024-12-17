@@ -1,5 +1,3 @@
-// Model to represent a conversion to maintain scalability.
-
 class ConversionRequest {
   final String cryptoCurrencyId;
   final String fiatCurrencyId;
@@ -15,7 +13,30 @@ class ConversionRequest {
     required this.amountCurrencyId,
   });
 
-  /// Convert the request to a map of query parameters.
+  factory ConversionRequest.empty() => ConversionRequest(
+        cryptoCurrencyId: '',
+        fiatCurrencyId: '',
+        type: 0,
+        amount: 0.0,
+        amountCurrencyId: '',
+      );
+
+  ConversionRequest copyWith({
+    String? cryptoCurrencyId,
+    String? fiatCurrencyId,
+    int? type,
+    double? amount,
+    String? amountCurrencyId,
+  }) {
+    return ConversionRequest(
+      cryptoCurrencyId: cryptoCurrencyId ?? this.cryptoCurrencyId,
+      fiatCurrencyId: fiatCurrencyId ?? this.fiatCurrencyId,
+      type: type ?? this.type,
+      amount: amount ?? this.amount,
+      amountCurrencyId: amountCurrencyId ?? this.amountCurrencyId,
+    );
+  }
+
   Map<String, String> toQueryParameters() {
     return {
       'cryptoCurrencyId': cryptoCurrencyId,

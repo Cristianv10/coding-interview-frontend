@@ -1,4 +1,3 @@
-import 'package:coding_interview_frontend/presentation/core/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class AppLayout extends StatelessWidget {
@@ -17,7 +16,6 @@ class AppLayout extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: const CustomAppBar(),
         body: SafeArea(
           top: showSafeArea,
           bottom: showSafeArea,
