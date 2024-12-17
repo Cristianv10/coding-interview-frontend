@@ -1,3 +1,4 @@
+import 'package:coding_interview_frontend/domain/core/extensions/currency_state_extensions.dart';
 import 'package:coding_interview_frontend/domain/core/models/fiat_assets.dart';
 import 'package:coding_interview_frontend/presentation/core/assets/assets.dart';
 import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
@@ -21,10 +22,9 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
   Widget build(BuildContext context) {
     return BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
       builder: (context, state) {
-        final fiatCurrencyId = _getFiatCurrencyId(state);
-        final isSwapped = _isSwapped(state);
+        final fiatCurrencyId = state.fiatCurrencyId;
+        final isSwapped = state.isSwapped;
         final fiatCurrencyAsset = FiatAssets.getAsset(fiatCurrencyId);
-
         return Stack(
           alignment: Alignment.center,
           children: [
@@ -146,25 +146,5 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
       ),
       builder: (context) => const FiatCurrencySelectionView(),
     );
-  }
-
-  String _getFiatCurrencyId(CurrencyConversionState state) {
-    if (state is CurrencyConversionUpdated ||
-        state is CurrencyConversionLoaded ||
-        state is CurrencyConversionLoading) {
-      return (state as dynamic).request.fiatCurrencyId;
-    }
-    return 'VES';
-  }
-
-  bool _isSwapped(CurrencyConversionState state) {
-    if (state is CurrencyConversionUpdated) {
-      return state.isSwapped;
-    } else if (state is CurrencyConversionLoaded) {
-      return state.isSwapped;
-    } else if (state is CurrencyConversionLoading) {
-      return state.isSwapped;
-    }
-    return false;
   }
 }

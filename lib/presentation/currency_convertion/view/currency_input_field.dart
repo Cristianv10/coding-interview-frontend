@@ -1,3 +1,4 @@
+import 'package:coding_interview_frontend/domain/core/extensions/currency_state_extensions.dart';
 import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +33,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
   Widget build(BuildContext context) {
     return BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
       builder: (context, state) {
-        final String currencyLabel = _getCurrencyLabel(state);
+        final String currencyLabel = state.currencyLabel;
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.orange, width: 1.5),
@@ -76,16 +77,5 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
         );
       },
     );
-  }
-
-  String _getCurrencyLabel(CurrencyConversionState state) {
-    if (state is CurrencyConversionUpdated) {
-      return !state.isSwapped ? 'USDT' : state.request.fiatCurrencyId;
-    } else if (state is CurrencyConversionLoaded) {
-      return !state.isSwapped ? 'USDT' : state.request.fiatCurrencyId;
-    } else if (state is CurrencyConversionLoading) {
-      return !state.isSwapped ? 'USDT' : state.request!.fiatCurrencyId;
-    }
-    return 'USDT';
   }
 }

@@ -1,5 +1,6 @@
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_state.dart';
 
+/// Extension methods for the [CurrencyState] class .
 extension CurrencyStateExtensions on CurrencyConversionState {
   /// Return if is swapped.
   bool get isSwapped {
@@ -7,6 +8,8 @@ extension CurrencyStateExtensions on CurrencyConversionState {
       return (this as CurrencyConversionUpdated).isSwapped;
     } else if (this is CurrencyConversionLoaded) {
       return (this as CurrencyConversionLoaded).isSwapped;
+    } else if (this is CurrencyConversionLoading) {
+      return (this as CurrencyConversionLoading).isSwapped;
     }
     return false;
   }

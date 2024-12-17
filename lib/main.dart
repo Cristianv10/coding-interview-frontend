@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 void main() {
   Injector.setup();
-  runApp(const NuBankTechChallenge());
+  runApp(const CodingInterViewChallenge());
 }
 
-class NuBankTechChallenge extends StatelessWidget {
-  const NuBankTechChallenge({super.key});
+class CodingInterViewChallenge extends StatelessWidget {
+  const CodingInterViewChallenge({super.key});
 
   @override
   Widget build(BuildContext context) {
