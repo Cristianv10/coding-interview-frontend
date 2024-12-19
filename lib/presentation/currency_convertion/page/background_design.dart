@@ -1,35 +1,52 @@
 import 'package:flutter/material.dart';
 
 class BackgroundDesign extends StatelessWidget {
-  final Size size;
+  final double size;
+  final Color? color;
+  final Offset position;
 
-  const BackgroundDesign({super.key, required this.size});
+  const BackgroundDesign({
+    super.key,
+    required this.size,
+    this.color,
+    required this.position,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Stack(
-        children: [
-          Container(
-            color: const Color(0xFFE3FDFD),
-          ),
-          Positioned(
-            top: 0,
-            right: -50,
-            child: Container(
-              height: size.height,
-              width: size.width * 0.6,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFA726),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(500),
-                  bottomLeft: Radius.circular(500),
-                ),
-              ),
-            ),
-          ),
-        ],
+    return Positioned(
+      top: position.dy,
+      right: position.dx,
+      child: CustomPaint(
+        size: Size(size, size),
+        painter: _InlineOvalPainter(
+          color: color ?? Colors.orange,
+        ),
       ),
     );
+  }
+}
+
+class _InlineOvalPainter extends CustomPainter {
+  final Color color;
+
+  _InlineOvalPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    // Dibuja el óvalo en el canvas
+    canvas.drawOval(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
