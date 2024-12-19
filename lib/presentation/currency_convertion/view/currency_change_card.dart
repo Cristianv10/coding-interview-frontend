@@ -64,14 +64,14 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
         currency: 'USDT',
         assetPath: Assets.tatum,
         isFiat: false,
-        onTap: () {},
+        onTap: () => _showCurrencySelection(context, false),
       ),
       SizedBox(width: 20.w),
       CurrencySelector(
         currency: fiatCurrencyId,
         assetPath: fiatCurrencyAsset,
         isFiat: true,
-        onTap: () => _showCurrencySelection(context),
+        onTap: () => _showCurrencySelection(context, true),
       ),
     ];
   }
@@ -83,14 +83,14 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
         currency: fiatCurrencyId,
         assetPath: fiatCurrencyAsset,
         isFiat: true,
-        onTap: () => _showCurrencySelection(context),
+        onTap: () => _showCurrencySelection(context, true),
       ),
       SizedBox(width: 20.w),
       CurrencySelector(
         currency: 'USDT',
         assetPath: Assets.tatum,
         isFiat: false,
-        onTap: () {},
+        onTap: () => _showCurrencySelection(context, false),
       ),
     ];
   }
@@ -140,13 +140,14 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
     }
   }
 
-  void _showCurrencySelection(BuildContext context) {
+  void _showCurrencySelection(BuildContext context, bool isFiat) {
+    print('Showing currency selection');
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => const FiatCurrencySelectionView(),
+      builder: (context) => FiatCurrencySelectionView(isFiat: isFiat),
     );
   }
 }

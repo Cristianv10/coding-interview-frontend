@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion_bloc.dart';
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/presentation/core/assets/assets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FiatCurrencySelectionView extends StatefulWidget {
-  const FiatCurrencySelectionView({super.key});
+  final bool isFiat;
+
+  const FiatCurrencySelectionView({super.key, required this.isFiat});
 
   @override
   State<FiatCurrencySelectionView> createState() =>
@@ -19,50 +22,107 @@ class _FiatCurrencySelectionViewState extends State<FiatCurrencySelectionView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          const Center(
-            child: Text(
-              'FIAT',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ),
+          const _DragHandle(),
+          SizedBox(height: 15.h),
+          _BottomModalTitle(widget: widget),
           const SizedBox(height: 10),
-          _buildCurrencyItem('VES', 'Bolívares (Bs)', Assets.vesCurrency),
-          _buildCurrencyItem('COP', 'Pesos Colombianos', Assets.copCurrency),
-          _buildCurrencyItem('PEN', 'Soles Peruanos (S/)', Assets.penCurrency),
-          _buildCurrencyItem('BRL', 'Real Brasileño (R\$)', Assets.brlCurrency),
+          ..._buildCurrencyItems(),
         ],
       ),
     );
   }
 
+  List<Widget> _buildCurrencyItems() {
+    if (widget.isFiat) {
+      return [
+        _buildCurrencyItem('VES', 'Bolívares (Bs)', Assets.vesCurrency),
+        _buildCurrencyItem('COP', 'Pesos Colombianos', Assets.copCurrency),
+        _buildCurrencyItem('PEN', 'Soles Peruanos (S/)', Assets.penCurrency),
+        _buildCurrencyItem('BRL', 'Real Brasileño (R\$)', Assets.brlCurrency),
+      ];
+    } else {
+      return [
+        _buildCurrencyItem('USDT', 'Tether (USDT)', Assets.tatum),
+      ];
+    }
+  }
+
   Widget _buildCurrencyItem(
       String currencyCode, String currencyName, String assetPath) {
     return ListTile(
-      leading: Image.asset(assetPath, width: 40, height: 40),
+      leading: Image.asset(assetPath, width: 25, height: 25),
       title: TextBase(
         text: currencyCode,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
       ),
-      subtitle: Text(currencyName),
+      subtitle: TextBase(
+        text: currencyName,
+        fontSize: 13,
+      ),
       trailing: Icon(
-        _selectedCurrency == currencyCode
+        widget.isFiat && _selectedCurrency == currencyCode
             ? Icons.radio_button_checked
             : Icons.radio_button_off,
-        color: Colors.orange,
+        color: Colors.black87,
       ),
       onTap: () {
-        setState(() {
-          _selectedCurrency = currencyCode;
-        });
-        context.read<CurrencyConversionBloc>().add(
-              UpdateConversionRequest(fiatCurrencyId: currencyCode),
-            );
+        if (widget.isFiat) {
+          setState(() {
+            _selectedCurrency = currencyCode;
+          });
+          context.read<CurrencyConversionBloc>().add(
+                UpdateConversionRequest(fiatCurrencyId: currencyCode),
+              );
+        }
         Navigator.of(context).pop();
       },
+    );
+  }
+}
+
+class _BottomModalTitle extends StatelessWidget {
+  const _BottomModalTitle({
+    super.key,
+    required this.widget,
+  });
+
+  final FiatCurrencySelectionView widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        widget.isFiat ? 'FIAT' : 'CRIPTO',
+        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}
+
+class _DragHandle extends StatelessWidget {
+  const _DragHandle({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 40,
+      height: 4,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(2),
+      ),
     );
   }
 }
