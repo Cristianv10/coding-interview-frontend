@@ -9,6 +9,7 @@ import 'package:coding_interview_frontend/application/currency_convertion/curren
 import 'package:coding_interview_frontend/application/currency_convertion/currency_convertion.event.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/currency_selector.dart';
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/fiat_currency_selection.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyChangeCard extends StatefulWidget {
   const CurrencyChangeCard({super.key});
@@ -30,8 +31,8 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
           children: [
             _buildCard(fiatCurrencyId, fiatCurrencyAsset, isSwapped),
             _buildSwapButton(),
-            _buildLabel('TENGO', Alignment.topLeft, -35, 40),
-            _buildLabel('QUIERO', Alignment.topRight, -35, -30),
+            _buildLabel('TENGO', Alignment.topLeft, -23.h, 40),
+            _buildLabel('QUIERO', Alignment.topRight, -23.h, -30),
           ],
         );
       },
@@ -41,11 +42,12 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
   Widget _buildCard(
       String fiatCurrencyId, String fiatCurrencyAsset, bool isSwapped) {
     return Container(
+      height: 40.h,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.orange, width: 2),
-        borderRadius: const BorderRadius.all(Radius.circular(40)),
+        borderRadius: BorderRadius.all(Radius.circular(40.w)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: isSwapped
@@ -64,7 +66,7 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
         isFiat: false,
         onTap: () {},
       ),
-      const SizedBox(width: 20),
+      SizedBox(width: 20.w),
       CurrencySelector(
         currency: fiatCurrencyId,
         assetPath: fiatCurrencyAsset,
@@ -83,7 +85,7 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
         isFiat: true,
         onTap: () => _showCurrencySelection(context),
       ),
-      const SizedBox(width: 20),
+      SizedBox(width: 20.w),
       CurrencySelector(
         currency: 'USDT',
         assetPath: Assets.tatum,
@@ -95,14 +97,14 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
 
   Widget _buildSwapButton() {
     return CircleAvatar(
-      radius: 20,
+      radius: 23.w,
       backgroundColor: Colors.orange,
       child: IconButton(
         onPressed: _swapCurrencies,
-        icon: const Icon(
+        icon: Icon(
           Icons.swap_horiz,
           color: Colors.white,
-          size: 28,
+          size: 28.w,
         ),
       ),
     );

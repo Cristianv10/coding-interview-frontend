@@ -14,9 +14,9 @@ class CurrencyConvertionPage extends StatelessWidget {
     return AppLayout(
       children: Stack(
         children: [
-          BackgroundCircle(
+          BackgroundDesign(
             size: 1000.sp,
-            position: Offset(-830.w, -200.h), // Posición directa aquí
+            position: Offset(-830.w, -200.h),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),

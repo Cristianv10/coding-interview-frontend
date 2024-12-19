@@ -38,7 +38,6 @@ class _InlineOvalPainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    // Dibuja el óvalo en el canvas
     canvas.drawOval(
       Rect.fromLTWH(0, 0, size.width, size.height),
       paint,

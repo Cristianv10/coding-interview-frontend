@@ -1,5 +1,6 @@
 import 'package:coding_interview_frontend/presentation/core/widgets/text_base.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencySelector extends StatelessWidget {
   final String currency;
@@ -24,15 +25,19 @@ class CurrencySelector extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(assetPath, width: 30, height: 30),
-              const SizedBox(width: 8),
+              Image.asset(assetPath, width: 30.w, height: 30.h),
+              SizedBox(width: 8.w),
               TextBase(
                 text: currency,
+                color: const Color.fromARGB(221, 56, 56, 56),
                 fontSize: 13,
+                fontWeight: FontWeight.w700,
               ),
             ],
           ),
-          const Icon(Icons.keyboard_arrow_down),
+          const Icon(
+            Icons.keyboard_arrow_down,
+          ),
         ],
       ),
     );

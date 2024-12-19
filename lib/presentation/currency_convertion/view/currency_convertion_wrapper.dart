@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyConvertionWrapper extends StatelessWidget {
   final Widget children;
@@ -7,7 +8,7 @@ class CurrencyConvertionWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: 300.w,
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
@@ -18,6 +19,7 @@ class CurrencyConvertionWrapper extends StatelessWidget {
               color: Colors.grey,
               blurRadius: 5,
               spreadRadius: 1,
+              offset: Offset(0, 4),
             )
           ],
         ),

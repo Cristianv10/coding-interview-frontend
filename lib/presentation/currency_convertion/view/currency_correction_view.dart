@@ -9,6 +9,7 @@ import 'package:coding_interview_frontend/presentation/currency_convertion/view/
 import 'package:coding_interview_frontend/presentation/currency_convertion/view/submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CurrencyConversionView extends StatefulWidget {
   const CurrencyConversionView({super.key});
@@ -31,6 +32,7 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 20.w),
           const CurrencyChangeCard(),
           const SizedBox(height: 20),
           const CurrencyInputField(),
