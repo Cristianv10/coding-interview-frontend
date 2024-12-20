@@ -29,8 +29,6 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
   Widget build(BuildContext context) {
     return CurrencyConvertionWrapper(
       children: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20.h),
           const CurrencyChangeCard(),
@@ -40,70 +38,15 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
           BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
             builder: (context, state) {
               if (state is CurrencyConversionLoading) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 20.0),
-                  child: Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.orange,
-                  )),
-                );
-              }
-              if (state is CurrencyConversionLoaded) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    ConversionDetailItem(
-                      label: 'Tasa estimada',
-                      value:
-                          '${state.rate.toStringAsFixed(2)} ${state.currentCurrency}',
-                    ),
-                    ConversionDetailItem(
-                      label: 'Recibirás',
-                      value: state.receivedAmountText,
-                    ),
-                    const ConversionDetailItem(
-                      label: 'Tiempo estimado',
-                      value: '10 Min',
-                    ),
-                    const SizedBox(height: 20),
-                    const SubmitButton(isEnabled: true),
-                  ],
-                );
-              }
-              if (state is CurrencyConversionInitial ||
-                  state is CurrencyConversionUpdated) {
-                return const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20),
-                    ConversionDetailItem(
-                      label: 'Tasa estimada',
-                      value: '0',
-                    ),
-                    ConversionDetailItem(
-                      label: 'Recibirás',
-                      value: '0',
-                    ),
-                    ConversionDetailItem(
-                      label: 'Tiempo estimado',
-                      value: '10 Min',
-                    ),
-                    SizedBox(height: 20),
-                    SubmitButton(isEnabled: true),
-                  ],
-                );
+                return _buildLoadingState();
               }
               if (state is CurrencyConversionError) {
-                return const Center(
-                  child: TextBase(
-                    text: 'Existe un error con la API',
-                    color: Colors.orange,
-                    fontWeight: FontWeight.w800,
-                  ),
-                );
+                return _buildErrorState();
               }
-              return const SizedBox.shrink();
+              if (state is CurrencyConversionLoaded) {
+                return _buildLoadedState(state);
+              }
+              return _buildInitialOrUpdatedState();
             },
           ),
         ],
@@ -121,5 +64,81 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
             isSwapped: false,
           ),
         );
+  }
+
+  Widget _buildLoadingState() {
+    return const Padding(
+      padding: EdgeInsets.only(top: 20.0),
+      child: Center(
+        child: CircularProgressIndicator(
+          color: Colors.orange,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return const Center(
+      child: TextBase(
+        text: 'Existe un error con la API',
+        color: Colors.orange,
+        fontWeight: FontWeight.w800,
+      ),
+    );
+  }
+
+  Widget _buildLoadedState(CurrencyConversionLoaded state) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        _buildConversionDetailItem('Tasa estimada',
+            '${state.rate.toStringAsFixed(2)} ${state.currentCurrency}'),
+        _buildConversionDetailItem('Recibirás', state.receivedAmountText),
+        const _ConversionDetailItem(label: 'Tiempo estimado', value: '10 Min'),
+        const SizedBox(height: 20),
+        const SubmitButton(isEnabled: true),
+      ],
+    );
+  }
+
+  Widget _buildInitialOrUpdatedState() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20),
+        _ConversionDetailItem(label: 'Tasa estimada', value: '0'),
+        _ConversionDetailItem(label: 'Recibirás', value: '0'),
+        _ConversionDetailItem(label: 'Tiempo estimado', value: '10 Min'),
+        SizedBox(height: 20),
+        SubmitButton(isEnabled: true),
+      ],
+    );
+  }
+
+  Widget _buildConversionDetailItem(String label, String value) {
+    return ConversionDetailItem(
+      label: label,
+      value: value,
+    );
+  }
+}
+
+class _ConversionDetailItem extends StatelessWidget {
+  const _ConversionDetailItem({
+    super.key,
+    required this.label,
+    required this.value,
+  });
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return ConversionDetailItem(
+      label: label,
+      value: value,
+    );
   }
 }

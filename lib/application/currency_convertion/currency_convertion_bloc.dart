@@ -47,6 +47,8 @@ class CurrencyConversionBloc
       return (state as CurrencyConversionLoaded).request;
     } else if (state is CurrencyConversionInitial) {
       return (state as CurrencyConversionInitial).request!;
+    } else if (state is CurrencyConversionError) {
+      return (state as CurrencyConversionError).request;
     }
     return ConversionRequest.empty();
   }
@@ -70,7 +72,7 @@ class CurrencyConversionBloc
     final result = await _getConversionRate(request);
 
     result.fold(
-      (failure) => emit(CurrencyConversionError(failure)),
+      (failure) => emit(CurrencyConversionError(failure, request)),
       (rate) {
         final receivedAmount = _calculateReceivedAmount(request, rate);
         final currencyId = _getCurrencyId(request);

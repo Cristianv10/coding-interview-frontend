@@ -44,6 +44,7 @@ class CurrencyConversionUpdated extends CurrencyConversionState {
 /// The error state of the currency conversion
 class CurrencyConversionError extends CurrencyConversionState {
   final String message;
+  final ConversionRequest request;
 
-  CurrencyConversionError(this.message);
+  CurrencyConversionError(this.message, this.request);
 }
