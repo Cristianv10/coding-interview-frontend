@@ -32,10 +32,11 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20.w),
+          SizedBox(height: 20.h),
           const CurrencyChangeCard(),
-          const SizedBox(height: 20),
+          SizedBox(height: 10.h),
           const CurrencyInputField(),
+          SizedBox(height: 20.h),
           BlocBuilder<CurrencyConversionBloc, CurrencyConversionState>(
             builder: (context, state) {
               if (state is CurrencyConversionLoading) {
@@ -67,6 +68,29 @@ class _CurrencyConversionViewState extends State<CurrencyConversionView> {
                     ),
                     const SizedBox(height: 20),
                     const SubmitButton(isEnabled: true),
+                  ],
+                );
+              }
+              if (state is CurrencyConversionInitial ||
+                  state is CurrencyConversionUpdated) {
+                return const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    ConversionDetailItem(
+                      label: 'Tasa estimada',
+                      value: '0',
+                    ),
+                    ConversionDetailItem(
+                      label: 'Recibirás',
+                      value: '0',
+                    ),
+                    ConversionDetailItem(
+                      label: 'Tiempo estimado',
+                      value: '10 Min',
+                    ),
+                    SizedBox(height: 20),
+                    SubmitButton(isEnabled: true),
                   ],
                 );
               }

@@ -91,7 +91,6 @@ class _FiatCurrencySelectionViewState extends State<FiatCurrencySelectionView> {
 
 class _BottomModalTitle extends StatelessWidget {
   const _BottomModalTitle({
-    super.key,
     required this.widget,
   });
 

@@ -16,7 +16,7 @@ class ConversionDetailItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextBase(text: label, fontSize: 14),
-          TextBase(text: value, fontWeight: FontWeight.bold),
+          TextBase(text: '= $value', fontWeight: FontWeight.w600),
         ],
       ),
     );
