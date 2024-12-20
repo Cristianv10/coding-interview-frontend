@@ -41,6 +41,7 @@ class _FiatCurrencySelectionViewState extends State<FiatCurrencySelectionView> {
     );
   }
 
+  /// build currency items depending on the type of currency
   List<Widget> _buildCurrencyItems() {
     if (widget.isFiat) {
       return [

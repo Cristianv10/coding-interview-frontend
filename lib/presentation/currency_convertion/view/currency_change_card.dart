@@ -141,7 +141,6 @@ class _CurrencyChangeCardState extends State<CurrencyChangeCard> {
   }
 
   void _showCurrencySelection(BuildContext context, bool isFiat) {
-    print('Showing currency selection');
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(

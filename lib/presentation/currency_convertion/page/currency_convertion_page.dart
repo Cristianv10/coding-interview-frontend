@@ -9,8 +9,6 @@ class CurrencyConvertionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return AppLayout(
       children: Stack(
         children: [
@@ -19,10 +17,10 @@ class CurrencyConvertionPage extends StatelessWidget {
             position: Offset(-830.w, -200.h),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
             child: SizedBox(
-              width: size.width * 0.9,
-              height: size.height,
+              width: 0.9.sw,
+              height: 1.sh,
               child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
